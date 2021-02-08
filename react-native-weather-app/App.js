@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 
 const TabScreen = () => (
   <Tab.Navigator>
-    <Tab.Screen name="Home" component={HomeScreen} />
+    <Tab.Screen name="Current" component={HomeScreen} />
     <Tab.Screen name="Weekly" component={WeeklyScreen} />
   </Tab.Navigator>
 );
@@ -19,8 +19,8 @@ const Drawer = createDrawerNavigator();
 const App = ({ navigation }) => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={TabScreen} />
+      <Drawer.Navigator initialRouteName="Current">
+        <Drawer.Screen name="Current" component={TabScreen} />
         <Drawer.Screen name="Weekly" component={WeeklyScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
