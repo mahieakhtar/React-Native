@@ -6,14 +6,14 @@ export const WeatherInfo = ({ weatherData }) => {
   return (
     <View style={styles.weatherContainer}>
       <View style={styles.row}>
-        <Feather name="thermometer" size={24} color="purple" />
+        <Feather name="thermometer" size={35} color="purple" />
         <View style={styles.column}>
           <Text>Feels Like</Text>
           <Text style={styles.text}>
-            {`${Math.round(weatherData?.main?.feels_like - 273.15)}`}
+            {`${Math.round(weatherData?.main?.feels_like - 273.15)} °C`}
           </Text>
         </View>
-        <Feather name="wind" size={24} color="purple" />
+        <Feather name="wind" size={35} color="purple" />
         <View style={styles.items}>
           <Text>Wind</Text>
           <Text style={styles.text}>
@@ -22,14 +22,14 @@ export const WeatherInfo = ({ weatherData }) => {
         </View>
       </View>
       <View style={styles.row}>
-        <Feather name="droplet" size={24} color="purple" />
+        <Feather name="droplet" size={35} color="purple" />
         <View style={styles.column}>
           <Text>Humidity</Text>
           <Text style={styles.text}>
             {`${weatherData?.main?.humidity} %`}
           </Text>
         </View>
-        <Feather name="compass" size={24} color="purple" />
+        <Feather name="compass" size={35} color="purple" />
         <View style={styles.items}>
           <Text>Pressure</Text>
           <Text style={styles.text}>
@@ -42,29 +42,28 @@ export const WeatherInfo = ({ weatherData }) => {
 };
 const styles = StyleSheet.create({
   weatherContainer: {
-    paddingBottom: 60,
+    margin:"auto",
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    borderWidth:.5,
+    borderColor:"white"
   },
   column: {
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    marginRight: 230,
+    marginRight: 200,
   },
   text: {
-    fontSize: 15,
+    fontSize: 20,
     color: "purple",
     fontWeight: "700",
-    margin: 7,
-    alignItems: "flex-start",
-    justifyContent: "flex-end",
+    margin: 5,
+    fontFamily: "Optima",
   },
   items: {
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    marginRight: 300,
+    paddingBottom: 10,
   },
 });

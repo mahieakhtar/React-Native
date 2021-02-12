@@ -6,15 +6,18 @@ import {
    Image,
 } from "react-native";
  
-export const WeatherDetails = ({weatherData,iconUrl,description}) => {
+export const WeatherDetails = ({weatherData}) => {
+   const date = new Date(`${weatherData?.dt}` * 1000).toDateString();
+   const IconUrl = `http://openweathermap.org/img/wn/${weatherData?.weather[0]?.icon}@4x.png`;
   return (
     <>
        <View style={styles.headerText}>
-          <Image style={styles.weatherIcon} source={{ uri: iconUrl }} />
-          <Text style={styles.textDetailsBold}>{`${weatherData?.name}`}</Text>
-          <Text style={styles.textDetails}>{`${description}`}</Text>
-          <Text style={styles.textDetailCelcius}>{`${Math.round(weatherData?.main?.temp-273.15)} °C`}</Text>
-          <Text style={styles.textDetails}>{`H : ${Math.round(weatherData?.main?.temp_max-273.15)} °C   `} 
+          <Text style={styles.date}>{`${date}`}</Text>
+          <Image style={styles.iconUrl} source={{ uri: IconUrl}}/>
+          <Text style={styles.iconName}>{`${weatherData?.name}`}</Text>
+          <Text style={styles.description}>{`${weatherData?.weather[0]?.description}`}</Text>
+          <Text style={styles.tempInCelcius}>{`${Math.round(weatherData?.main?.temp-273.15)} °C`}</Text>
+          <Text style={styles.maxMinTemp}>{`H : ${Math.round(weatherData?.main?.temp_max-273.15)} °C   `} 
                    {`L : ${Math.round(weatherData?.main?.temp_min-273.15)} °C`}</Text>
         </View>
     </>
@@ -24,34 +27,46 @@ const styles = StyleSheet.create({
   headerText: {
     alignItems: "center",
     justifyContent: "center",
-    paddingBottom: 300,
+    paddingTop:30,
+    paddingBottom: 265,
   },
-  weatherIcon: {
-    width: 300,
-    height: 150,
+  date:{
+    color:"white",
+    paddingBottom:20
+  },
+  iconUrl: {
+    width: 250,
+    height: 130,
     alignItems: "center",
   },
-  textDetailsBold: {
+  iconName: {
     color: "white",
     fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",
     fontFamily: "Optima",
   },
-textDetails: {
+  description: {
     color: "white",
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
     fontFamily: "Optima",
   },
-  textDetailCelcius: {
+  tempInCelcius: {
     color: "white",
     fontSize: 70,
     fontWeight: "bold",
     textAlign: "center",
     fontFamily: "Optima",
   },
+  maxMinTemp:{
+    color: "white",
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "center",
+    fontFamily: "Optima",
+  }
  });
 
 

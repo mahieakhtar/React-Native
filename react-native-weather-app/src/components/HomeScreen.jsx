@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useContext,useState, useEffect, useCallback } from "react";
 import {
    StyleSheet,
    View,
@@ -9,18 +9,19 @@ import {
  import { MaterialIcons } from "@expo/vector-icons";
 import { WeatherInfo } from "./WeatherInfo";
 import {WeatherDetails}from "./WeatherDetails"
+ import { WeatherContext } from "../context/WeatherContext";
+ import { LatLonContext } from "../context/LatLonContext";
 
 export const HomeScreen = ({navigation}) => {
-  const [currentCity, setCurrentCity] = useState("copenhagen");
-  const [weatherData, setWeatherData] = useState();
-   const [icon, setIcon] = useState();
-   const [description, setDescription] = useState();
+  const {currentCity, setCurrentCity} = useContext(WeatherContext);
+  const { setLat, setLon } = useContext(LatLonContext);
+  const [weatherData, setWeatherData] = useState(null);
   
-  const UpdateCity = useCallback(async () => {
+   const UpdateCity = useCallback(async () => {
       try {
         const response = await getWeatherByCityName(currentCity);
-        setIcon(response.weather[0].icon);
-        setDescription(response.weather[0].main);
+        setLat(response.coord.lat);
+        setLon(response.coord.lon);
         setWeatherData(response);
       } catch (error) {
         console.log(error);
@@ -30,11 +31,10 @@ export const HomeScreen = ({navigation}) => {
   useEffect(() => {
     UpdateCity();
   }, []);
-   const iconUrl = `https://openweathermap.org/img/wn/${icon}@4x.png`;
-  return (
-    <>
-       <ImageBackground
-          style={styles.ImageBackground} 
+   return (
+     <>
+        <ImageBackground
+          style={styles.ImageBackground}  
           source={require("../../assets/bg.jpg")}>
       <View style={styles.header}>
           <MaterialIcons
@@ -52,25 +52,21 @@ export const HomeScreen = ({navigation}) => {
           name="search" 
           size={30}  
           onPress={UpdateCity}/>
-        </View>
+        </View> 
         <WeatherDetails 
         weatherData={weatherData}
-        description={description}
-        iconUrl={iconUrl}
         />
-      </ImageBackground>
-       <WeatherInfo weatherData={weatherData}/>
-    </>
+      </ImageBackground> 
+      <WeatherInfo weatherData={weatherData}/>
+      </>
   );
 }; 
-
 const styles = StyleSheet.create({
   ImageBackground: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     justifyContent: "flex-end",
-    height:"90%"
   },
   header: {
     width: "100%",
